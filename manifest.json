@@ -3,7 +3,7 @@
 	"name": "Comments",
 	"version": "1.0.3",
 	"minAppVersion": "0.15.0",
-	"description": "Add comments to your markdown files to facilitate collaboration.",
-	"author": "Jasper Surmont",
+	"description": "An adapted version for a workflow where Claude Code can review and comment on notes.",
+	"author": "Claude; forked from Jasper Surmont",
 	"isDesktopOnly": false
 }

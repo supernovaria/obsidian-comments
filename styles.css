@@ -1,59 +1,211 @@
 h2.comments-title {
-    text-align: center
+    text-align: center;
+    margin-bottom: 8px;
 }
 
-.comment-item-container {
-    margin-bottom: 10px;
-    padding: 10px;
-    border-radius: 5px;
-    border: solid rgba(255, 255, 255, 0.2);
-    border-width: 1px;
+.comments-wrapper {
     display: flex;
     flex-direction: column;
+    height: 100%;
 }
 
-.comment-item {  
+/* ── Toolbar ── */
+
+.comments-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 8px 8px;
+    border-bottom: 1px solid var(--background-modifier-border);
+    margin-bottom: 8px;
+}
+
+.comments-nav,
+.comments-actions {
+    display: flex;
+    gap: 4px;
+}
+
+.comments-nav-btn,
+.comments-action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
+    border: 1px solid var(--background-modifier-border);
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: background-color 150ms ease, color 150ms ease;
+    padding: 0;
+}
+
+.comments-nav-btn svg,
+.comments-action-btn svg,
+.comment-resolve-btn svg,
+.comment-claude-icon svg {
+    display: block;
+    flex-shrink: 0;
+    overflow: visible;
+}
+
+.comments-nav-btn:hover,
+.comments-action-btn:hover {
+    background: var(--background-modifier-hover);
+    color: var(--text-normal);
+}
+
+.comments-delete-all-btn:hover {
+    background: var(--background-modifier-error) !important;
+    color: var(--text-on-accent) !important;
+    border-color: var(--color-red) !important;
+}
+
+/* ── Comment list ── */
+
+.comments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 4px 2px;
+    overflow-y: auto;
+}
+
+.comments-empty {
+    text-align: center;
+    color: var(--text-muted);
+    font-style: italic;
+    margin-top: 24px;
+}
+
+/* ── Comment card ── */
+
+.comment-item-container {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid var(--background-modifier-border);
+    display: flex;
+    flex-direction: column;
+    transition: border-color 150ms ease;
+}
+
+.comment-item-container.comment-active {
+    border-color: var(--interactive-accent);
+    box-shadow: 0 0 0 1px var(--interactive-accent);
+}
+
+/* Claude Code comment — amber left border */
+.comment-item-container.comment-claude {
+    border-left: 3px solid #e8a020;
+}
+
+.comment-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+    gap: 4px;
+}
+
+.comment-line {
+    font-size: .8rem;
+    color: var(--text-muted);
+    flex-shrink: 0;
+}
+
+.comment-item-date {
+    font-size: .8rem;
+    color: var(--text-muted);
+    flex: 1;
+    text-align: center;
+}
+
+.comment-minimize {
+    text-align: center;
+    border: 1px solid var(--background-modifier-border);
+    background: transparent;
+    color: var(--text-muted);
+    width: 20px;
+    height: 20px;
+    border-radius: 3px;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+/* Resolve (✓) button */
+.comment-resolve-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 4px;
+    border: 1px solid var(--background-modifier-border);
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease;
+}
+
+.comment-resolve-btn:hover {
+    background: var(--color-green);
+    color: white;
+    border-color: var(--color-green);
+}
+
+/* ── Comment body ── */
+
+.comment-item {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     gap: 10px;
-    border-radius: 10px;
+    border-radius: 6px;
     transition: background-color 200ms ease-in-out;
-    padding-left: 10px;
-    padding-right: 10px;
-}
-
-.comment-header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 5px;
-}
-
-.comment-minimize {
-    text-align: center;
-    border: solid rgba(255, 255, 255, 0.2);
-    border-width: 1px;
-    
-    /* padding: 5px; */
-}
-
-.comment-line {
-    font-size: .8rem;
-}
-
-.comment-item-date {
-    font-size: .8rem;
+    padding: 4px 8px;
+    cursor: pointer;
 }
 
 .comment-item-text {
-    font-size: 1rem
+    font-size: 1rem;
+    margin: 0;
+    flex: 1;
 }
+
+.comment-author {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+    color: var(--text-muted);
+    font-size: .85rem;
+}
+
+.comment-claude-icon {
+    display: flex;
+    align-items: center;
+    color: #e8a020;
+}
+
+.comment-name {
+    white-space: nowrap;
+}
+
+/* ── Children / subcomments ── */
 
 .comment-children {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    margin-top: 6px;
+}
+
+.comment-children.hidden {
+    display: none;
 }
 
 .comment-child-container {
@@ -65,27 +217,76 @@ h2.comments-title {
     gap: 3px;
 }
 
-.comment-child {  
+.comment-child {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     gap: 10px;
     transition: background-color 200ms ease-in-out;
-    border-radius: 10px;
-    padding-left: 10px;
-    padding-right: 10px;
+    border-radius: 6px;
+    padding: 4px 8px;
+    cursor: pointer;
 }
 
 .comment-child-separator {
-    border-top: solid rgba(255,255,255, 0.2);
-    border-width: 1px;
-    margin-bottom:5px;
+    border-top: 1px solid var(--background-modifier-border);
+    margin-bottom: 5px;
 }
 
 .comment-child-date {
     font-size: .8em;
+    color: var(--text-muted);
 }
+
+.comment-child-text {
+    font-size: 1rem;
+    margin: 0;
+    flex: 1;
+}
+
+/* ── Hover states ── */
+
+.theme-dark .comment-item:hover,
+.theme-dark .comment-child:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.theme-light .comment-item:hover,
+.theme-light .comment-child:hover {
+    background-color: rgba(0, 0, 0, 0.06);
+}
+
+/* ── Anchor mark in note text ── */
+
+mark[data-cid] {
+    background-color: rgba(255, 200, 0, 0.25);
+    border-radius: 2px;
+    padding: 0 1px;
+}
+
+.theme-dark mark[data-cid] {
+    background-color: rgba(255, 200, 0, 0.18);
+}
+
+/* ── Anchor badge in comment panel ── */
+
+.comment-anchor-badge {
+    display: block;
+    font-size: .78em;
+    color: var(--text-muted);
+    font-style: italic;
+    background: var(--background-secondary);
+    border-left: 2px solid var(--color-yellow, #e8a020);
+    border-radius: 0 3px 3px 0;
+    padding: 2px 6px;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ── Callout appearance in editor ── */
 
 .callout[data-callout="comment"] {
     --callout-icon: lucide-message-square;
@@ -98,29 +299,11 @@ h2.comments-title {
 }
 
 .theme-light .callout[data-callout="comment"] {
-    --callout-color: 0,0,0;
+    --callout-color: 0, 0, 0;
     border: 3px solid rgba(0, 0, 0, 0.1);
 }
 
-
-.theme-dark .comment-item:hover {
-    background-color: rgba(255, 255, 255, 0.2);
-}
-
-.theme-light .comment-item:hover {
-    background-color: rgba(0, 0, 0, 0.2);
-}
-
-.theme-dark .comment-child:hover {
-    background-color: rgba(255, 255, 255, 0.2);
-}
-
-.theme-light .comment-child:hover {
-    background-color: rgba(0, 0, 0, 0.2);
-}
-
 @media print {
-    /* Your elements to hide */
     .callout[data-callout="comment"] {
         display: none !important;
     }
